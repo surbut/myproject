@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="surbut" />
+
+<meta name="date" content="2018-09-28" />
+
+<title>first-analysis</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">myproject</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/jdblischak/workflowr">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">first-analysis</h1>
+<h4 class="author"><em>surbut</em></h4>
+<h4 class="date"><em>2018-09-28</em></h4>
+
+</div>
+
+
+<p><strong>Last updated:</strong> 2018-09-28</p>
+<strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
+<ul>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Environment:</strong> empty </summary></p>
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Seed:</strong> <code>set.seed(20180928)</code> </summary></p>
+<p>The command <code>set.seed(20180928)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Session information:</strong> recorded </summary></p>
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/surbut/myproject/tree/dfaca59758b2ff694279d8c221d9e6857b7b9a85" target="_blank">dfaca59</a> </summary></p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/Pearson_cache/
+
+Untracked files:
+    Untracked:  analysis/first-analysis.Rmd
+
+</code></pre>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
+</li>
+</ul>
+<details> <summary> <small><strong>Expand here to see past versions:</strong></small> </summary>
+<ul>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+File
+</th>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:left;">
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/surbut/myproject/blob/dfaca59758b2ff694279d8c221d9e6857b7b9a85/analysis/Pearson.Rmd" target="_blank">dfaca59</a>
+</td>
+<td style="text-align:left;">
+surbut
+</td>
+<td style="text-align:left;">
+2018-09-28
+</td>
+<td style="text-align:left;">
+modified_file_path
+</td>
+</tr>
+</tbody>
+</table>
+</ul>
+<p></details></p>
+<hr />
+<div id="r-markdown" class="section level2">
+<h2>R Markdown</h2>
+<p>Here I load the data from my Data directory within this project:</p>
+<pre class="r"><code>#install.packages(&quot;workflowr&quot;)
+#library(&quot;workflowr&quot;)
+temp = list.files(path=&quot;~/Dropbox/Pearson_Data/Data/&quot;,pattern=&quot;Decon*&quot;,full.names = TRUE)</code></pre>
+<p>Combine into merged data set, you can see the data is actually in a different order than 1:10;</p>
+<pre class="r"><code>temp</code></pre>
+<pre><code> [1] &quot;Decon_LC1.csv&quot;  &quot;Decon_LC10.csv&quot; &quot;Decon_LC11.csv&quot; &quot;Decon_LC12.csv&quot;
+ [5] &quot;Decon_LC13.csv&quot; &quot;Decon_LC14.csv&quot; &quot;Decon_LC2.csv&quot;  &quot;Decon_LC3.csv&quot; 
+ [9] &quot;Decon_LC4.csv&quot;  &quot;Decon_LC5.csv&quot;  &quot;Decon_LC6.csv&quot;  &quot;Decon_LC7.csv&quot; 
+[13] &quot;Decon_LC8.csv&quot;  &quot;Decon_LC9.csv&quot; </code></pre>
+<p>Here we combine the dfs into a list and merge shared rows.</p>
+<pre class="r"><code>myfiles = lapply(temp, function(x){
+  a=read.csv(file=x,header = T);
+  return(a[,c(2:3)])})
+
+
+
+b=Reduce(function(x,y) merge(x, y, by = &quot;full_label&quot;, all.x = TRUE, all.y = TRUE),myfiles) 
+
+
+
+b[is.na(b)] &lt;- 0
+rownames(b)=b[,1];b=b[,-1]
+
+mat=as.matrix(b)</code></pre>
+<p>You can see that the barcodes are in the rows and the tissue samples are in the columns, in the order posted above,</p>
+<pre class="r"><code>head(mat)</code></pre>
+<pre><code>              full_readnum.x full_readnum.y full_readnum.x.1
+bar|1 13336              519              0                0
+bar|1 13973              211              0                0
+bar|1 5589                85              0                0
+bar|1 9115               230            141                0
+bar|10 6039              245            309                0
+bar|100 14202            197              0                0
+              full_readnum.y.1 full_readnum.x.2 full_readnum.y.2
+bar|1 13336                  0                0                0
+bar|1 13973                  0                0                0
+bar|1 5589                   0                0                0
+bar|1 9115                   0                0                0
+bar|10 6039                  1               30                0
+bar|100 14202                0                0                0
+              full_readnum.x.3 full_readnum.y.3 full_readnum.x.4
+bar|1 13336                  0                0                0
+bar|1 13973                  0                0                0
+bar|1 5589                   0                0                0
+bar|1 9115                   1               11               13
+bar|10 6039                  0                0                0
+bar|100 14202                0                0                0
+              full_readnum.y.4 full_readnum.x.5 full_readnum.y.5
+bar|1 13336                  0                0                0
+bar|1 13973                  0                0                0
+bar|1 5589                   0                0                0
+bar|1 9115                   0                0                0
+bar|10 6039                  0                0                0
+bar|100 14202                0                0                0
+              full_readnum.x.6 full_readnum.y.6
+bar|1 13336                  0                0
+bar|1 13973                  0                0
+bar|1 5589                   0                0
+bar|1 9115                   0                0
+bar|10 6039                  0                0
+bar|100 14202                0                0</code></pre>
+<p>and that the rows correspond to unique barcodes:</p>
+<pre class="r"><code>length(rownames(b))</code></pre>
+<pre><code>[1] 111595</code></pre>
+<pre class="r"><code>length(unique(rownames(b)))</code></pre>
+<pre><code>[1] 111595</code></pre>
+<p>There are 14 unqiue barcodes. NOw we install some packages necessary for the GOM model according to <strong>CountClust</strong> vignette.</p>
+<pre class="r"><code># install.packages(&quot;maptpx&quot;)
+source(&quot;https://bioconductor.org/biocLite.R&quot;)</code></pre>
+<pre><code>Bioconductor version 3.7 (BiocInstaller 1.30.0), ?biocLite for help</code></pre>
+<pre class="r"><code>biocLite(&quot;CountClust&quot;)</code></pre>
+<pre><code>BioC_mirror: https://bioconductor.org</code></pre>
+<pre><code>Using Bioconductor 3.7 (BiocInstaller 1.30.0), R 3.5.1 (2018-07-02).</code></pre>
+<pre><code>Installing package(s) &#39;CountClust&#39;</code></pre>
+<pre><code>
+The downloaded binary packages are in
+    /var/folders/2h/6fmv9psj32v9mzpd6nkrn7zr0000gn/T//Rtmp6DD1zI/downloaded_packages</code></pre>
+<pre><code>Old packages: &#39;ape&#39;</code></pre>
+<pre class="r"><code>library(&#39;CountClust&#39;)</code></pre>
+<pre><code>Loading required package: ggplot2</code></pre>
+<pre class="r"><code>#label_names=read.csv(&quot;../Data/sample_names.csv&quot;,header = F)
+#source(&quot;https://bioconductor.org/biocLite.R&quot;)
+#abiocLite(&quot;Biobase&quot;)
+# Here&#39;s a tutorial from the help file of Count Clust on GTEX data
+# gtex.counts &lt;- Biobase::exprs(GTExV6Brain)
+# gtex.meta_data &lt;- Biobase::pData(GTExV6Brain)
+# gtex.gene_names &lt;- rownames(gtex.counts)
+# 
+# FitGoM(t(gtex.counts),
+#             K=4, tol=1)
+
+#fit &lt;- FitGoM(t(b),K=4, tol=1)
+
+library(&quot;RColorBrewer&quot;)</code></pre>
+<p>To fit for multiple K:</p>
+<pre class="r"><code>fits &lt;- lapply(8:10, function(k) FitGoM(t(b),K=k, tol=1))## try over different Ks</code></pre>
+<pre><code>options not specified: switching to default BIC, other choice is BF for Bayes factor</code></pre>
+<pre><code>Fitting a Grade of Membership model
+            (Taddy M., AISTATS 2012, JMLR 22,
+            http://proceedings.mlr.press/v22/taddy12/taddy12.pdf)</code></pre>
+<pre><code>
+Estimating on a 14 document collection.
+Fit and Bayes Factor Estimation for K = 8
+log posterior increase: 193380111.7, done.
+log BF( 8 ) = 759341206.63</code></pre>
+<pre><code>options not specified: switching to default BIC, other choice is BF for Bayes factor
+Fitting a Grade of Membership model
+            (Taddy M., AISTATS 2012, JMLR 22,
+            http://proceedings.mlr.press/v22/taddy12/taddy12.pdf)</code></pre>
+<pre><code>
+Estimating on a 14 document collection.
+Fit and Bayes Factor Estimation for K = 9
+log posterior increase: 55720728.9, done.
+log BF( 9 ) = 733977732.28</code></pre>
+<pre><code>options not specified: switching to default BIC, other choice is BF for Bayes factor
+Fitting a Grade of Membership model
+            (Taddy M., AISTATS 2012, JMLR 22,
+            http://proceedings.mlr.press/v22/taddy12/taddy12.pdf)</code></pre>
+<pre><code>
+Estimating on a 14 document collection.
+Fit and Bayes Factor Estimation for K = 10
+log posterior increase: 259760567.3, done.
+log BF( 10 ) = 1020313934.65</code></pre>
+<pre class="r"><code>#fit=FitGoM(t(b),K=4, tol=1)
+
+omega &lt;- fits[[3]]$fit$omega
+fitGOM=fits[[3]]$fit
+attributes(fitGOM)</code></pre>
+<pre><code>$names
+[1] &quot;K&quot;     &quot;theta&quot; &quot;omega&quot; &quot;BF&quot;    &quot;D&quot;     &quot;X&quot;    
+
+$class
+[1] &quot;topics&quot;</code></pre>
+<pre class="r"><code>annotation &lt;- data.frame(
+ sample_id = rownames(omega),
+ tissue_label = factor(rownames(omega),
+                       levels = rownames(omega),
+labels=rev( c(&quot;cell_pellet&quot;, &quot;lung_5&quot;,&quot;liver_5&quot;,&quot;rt.ovary_5&quot;,&quot;sc_tumor_2&quot;,&quot;omentum_5&quot;,&quot;sc_tumor&quot;, &quot;lung_m3&quot;,&quot;liver_m3&quot;,&quot;right_ovary_3&quot;, &quot;left_ovary_3&quot;, &quot;adrenal_3&quot;, &quot;lung_4&quot;,&quot;rt_ovary_4&quot;))))
+
+rownames(omega) &lt;- annotation$sample_id;
+
+
+sample_id &lt;- rownames(omega)
+
+annotation$sample_id &lt;- as.character(annotation$sample_id)
+
+StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = c(brewer.pal(8, &quot;Accent&quot;),brewer.pal(8, &quot;Accent&quot;)),
+                yaxis_label = &quot;Development Phase&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;))</code></pre>
+<p><img src="figure/Pearson.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Let’s plot a heatmap of the clones driving the clusters:</p>
+<pre class="r"><code>library(&#39;lattice&#39;)
+barplot(height = fitGOM$theta,col = brewer.pal(9,&quot;Greens&quot;),main=&quot;CloneRepresentation per Cluster&quot;)</code></pre>
+<p><img src="figure/Pearson.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We extract the top clones driving each cluster using the ExtractTopFeatures functionality of the CountClust package. We first perform the cluster annotations from the GoM model fit with $k=10` on the clone data:</p>
+<pre class="r"><code>#install.packages(&quot;dplyr&quot;)
+library(&#39;dplyr&#39;)
+
+theta_mat &lt;- fitGOM$theta;
+top_features &lt;- ExtractTopFeatures(theta_mat, top_features=100,
+                                   method=&quot;poisson&quot;, options=&quot;min&quot;);
+
+clone_names=rownames(b)
+cell_list &lt;- do.call(rbind, lapply(1:dim(top_features$indices)[1],
+                        function(x) clone_names[top_features$indices[x,]]))
+
+tmp &lt;- do.call(rbind, lapply(1:5, function(i) toString(cell_list[,i])))
+rownames(tmp) &lt;- paste(&quot;Cluster&quot;, c(1:5))
+#library(knitr)
+#install.packages(&quot;kableExtra&quot;)
+
+library(&quot;kableExtra&quot;)
+rownames(tmp) &lt;- paste(&quot;Cluster&quot;, c(1:3))
+tmp %&gt;%
+  kable(&quot;html&quot;) %&gt;%
+  kable_styling()</code></pre>
+</div>
+<div id="session-information" class="section level2">
+<h2>Session information</h2>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.5.1 (2018-07-02)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS High Sierra 10.13.3
+
+Matrix products: default
+BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] lattice_0.20-35      RColorBrewer_1.1-2   CountClust_1.8.0    
+[4] ggplot2_3.0.0        BiocInstaller_1.30.0 workflowr_1.1.1     
+
+loaded via a namespace (and not attached):
+ [1] gtools_3.8.1      modeltools_0.2-22 tidyselect_0.2.4 
+ [4] slam_0.1-43       purrr_0.2.5       reshape2_1.4.3   
+ [7] colorspace_1.3-2  htmltools_0.3.6   stats4_3.5.1     
+[10] mgcv_1.8-24       yaml_2.2.0        rlang_0.2.2      
+[13] R.oo_1.22.0       pillar_1.3.0      glue_1.3.0       
+[16] withr_2.1.2       R.utils_2.7.0     bindrcpp_0.2.2   
+[19] bindr_0.1.1       plyr_1.8.4        stringr_1.3.1    
+[22] munsell_0.5.0     gtable_0.2.0      R.methodsS3_1.7.1
+[25] codetools_0.2-15  evaluate_0.11     knitr_1.20       
+[28] permute_0.9-4     flexmix_2.3-14    parallel_3.5.1   
+[31] Rcpp_0.12.18      scales_1.0.0      backports_1.1.2  
+[34] limma_3.36.5      vegan_2.5-2       maptpx_1.9-2     
+[37] picante_1.7       digest_0.6.17     stringi_1.2.4    
+[40] dplyr_0.7.6       grid_3.5.1        rprojroot_1.3-2  
+[43] cowplot_0.9.3     tools_3.5.1       magrittr_1.5     
+[46] lazyeval_0.2.1    tibble_1.4.2      cluster_2.0.7-1  
+[49] crayon_1.3.4      ape_5.1           whisker_0.3-2    
+[52] pkgconfig_2.0.2   Matrix_1.2-14     MASS_7.3-50      
+[55] SQUAREM_2017.10-1 assertthat_0.2.0  rmarkdown_1.10   
+[58] R6_2.2.2          nnet_7.3-12       nlme_3.1-137     
+[61] git2r_0.23.0      compiler_3.5.1   </code></pre>
+</div>
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+<hr>
+<p>
+  This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a>
+  analysis was created with
+  <a href="https://github.com/jdblischak/workflowr">workflowr</a> 1.1.1
+</p>
+<hr>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
