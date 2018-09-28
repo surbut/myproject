@@ -27,6 +27,7 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
 <script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
 <script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
@@ -327,8 +328,7 @@ div.section {
 <strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
 <ul>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p><details> <summary> <strong style="color:red;">✖</strong> <strong>R Markdown file:</strong> uncommitted changes </summary> The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </details>
 </li>
 <li>
@@ -347,16 +347,20 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/surbut/myproject/tree/dfaca59758b2ff694279d8c221d9e6857b7b9a85" target="_blank">dfaca59</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/surbut/myproject/tree/fac85570bacaca9bb3891ccaf4a9489d9d422985" target="_blank">fac8557</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
     Ignored:    .DS_Store
+    Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    analysis/Pearson_cache/
 
 Untracked files:
     Untracked:  analysis/first-analysis.Rmd
+
+Unstaged changes:
+    Modified:   analysis/Pearson.Rmd
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
@@ -387,6 +391,23 @@ Message
 <tbody>
 <tr>
 <td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/surbut/myproject/d81f2a675dc628b98d2fdc6834aba282b51b86d7/docs/Pearson.html" target="_blank">d81f2a6</a>
+</td>
+<td style="text-align:left;">
+surbut
+</td>
+<td style="text-align:left;">
+2018-09-28
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 Rmd
 </td>
 <td style="text-align:left;">
@@ -415,10 +436,20 @@ modified_file_path
 temp = list.files(path=&quot;~/Dropbox/Pearson_Data/Data/&quot;,pattern=&quot;Decon*&quot;,full.names = TRUE)</code></pre>
 <p>Combine into merged data set, you can see the data is actually in a different order than 1:10;</p>
 <pre class="r"><code>temp</code></pre>
-<pre><code> [1] &quot;Decon_LC1.csv&quot;  &quot;Decon_LC10.csv&quot; &quot;Decon_LC11.csv&quot; &quot;Decon_LC12.csv&quot;
- [5] &quot;Decon_LC13.csv&quot; &quot;Decon_LC14.csv&quot; &quot;Decon_LC2.csv&quot;  &quot;Decon_LC3.csv&quot; 
- [9] &quot;Decon_LC4.csv&quot;  &quot;Decon_LC5.csv&quot;  &quot;Decon_LC6.csv&quot;  &quot;Decon_LC7.csv&quot; 
-[13] &quot;Decon_LC8.csv&quot;  &quot;Decon_LC9.csv&quot; </code></pre>
+<pre><code> [1] &quot;/Users/sarahurbut/Dropbox/Pearson_Data/Data//Decon_LC1.csv&quot; 
+ [2] &quot;/Users/sarahurbut/Dropbox/Pearson_Data/Data//Decon_LC10.csv&quot;
+ [3] &quot;/Users/sarahurbut/Dropbox/Pearson_Data/Data//Decon_LC11.csv&quot;
+ [4] &quot;/Users/sarahurbut/Dropbox/Pearson_Data/Data//Decon_LC12.csv&quot;
+ [5] &quot;/Users/sarahurbut/Dropbox/Pearson_Data/Data//Decon_LC13.csv&quot;
+ [6] &quot;/Users/sarahurbut/Dropbox/Pearson_Data/Data//Decon_LC14.csv&quot;
+ [7] &quot;/Users/sarahurbut/Dropbox/Pearson_Data/Data//Decon_LC2.csv&quot; 
+ [8] &quot;/Users/sarahurbut/Dropbox/Pearson_Data/Data//Decon_LC3.csv&quot; 
+ [9] &quot;/Users/sarahurbut/Dropbox/Pearson_Data/Data//Decon_LC4.csv&quot; 
+[10] &quot;/Users/sarahurbut/Dropbox/Pearson_Data/Data//Decon_LC5.csv&quot; 
+[11] &quot;/Users/sarahurbut/Dropbox/Pearson_Data/Data//Decon_LC6.csv&quot; 
+[12] &quot;/Users/sarahurbut/Dropbox/Pearson_Data/Data//Decon_LC7.csv&quot; 
+[13] &quot;/Users/sarahurbut/Dropbox/Pearson_Data/Data//Decon_LC8.csv&quot; 
+[14] &quot;/Users/sarahurbut/Dropbox/Pearson_Data/Data//Decon_LC9.csv&quot; </code></pre>
 <p>Here we combine the dfs into a list and merge shared rows.</p>
 <pre class="r"><code>myfiles = lapply(temp, function(x){
   a=read.csv(file=x,header = T);
@@ -486,7 +517,7 @@ source(&quot;https://bioconductor.org/biocLite.R&quot;)</code></pre>
 <pre><code>Installing package(s) &#39;CountClust&#39;</code></pre>
 <pre><code>
 The downloaded binary packages are in
-    /var/folders/2h/6fmv9psj32v9mzpd6nkrn7zr0000gn/T//Rtmp6DD1zI/downloaded_packages</code></pre>
+    /var/folders/2h/6fmv9psj32v9mzpd6nkrn7zr0000gn/T//RtmpvejWHb/downloaded_packages</code></pre>
 <pre><code>Old packages: &#39;ape&#39;</code></pre>
 <pre class="r"><code>library(&#39;CountClust&#39;)</code></pre>
 <pre><code>Loading required package: ggplot2</code></pre>
@@ -567,15 +598,82 @@ StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;))</code></pre>
 <p><img src="figure/Pearson.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-6-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/surbut/myproject/blob/d81f2a675dc628b98d2fdc6834aba282b51b86d7/docs/figure/Pearson.Rmd/unnamed-chunk-6-1.png" target="_blank">d81f2a6</a>
+</td>
+<td style="text-align:left;">
+surbut
+</td>
+<td style="text-align:left;">
+2018-09-28
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <p>Let’s plot a heatmap of the clones driving the clusters:</p>
 <pre class="r"><code>library(&#39;lattice&#39;)
 barplot(height = fitGOM$theta,col = brewer.pal(9,&quot;Greens&quot;),main=&quot;CloneRepresentation per Cluster&quot;)</code></pre>
 <p><img src="figure/Pearson.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-7-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/surbut/myproject/blob/d81f2a675dc628b98d2fdc6834aba282b51b86d7/docs/figure/Pearson.Rmd/unnamed-chunk-7-1.png" target="_blank">d81f2a6</a>
+</td>
+<td style="text-align:left;">
+surbut
+</td>
+<td style="text-align:left;">
+2018-09-28
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <p>We extract the top clones driving each cluster using the ExtractTopFeatures functionality of the CountClust package. We first perform the cluster annotations from the GoM model fit with $k=10` on the clone data:</p>
 <pre class="r"><code>#install.packages(&quot;dplyr&quot;)
-library(&#39;dplyr&#39;)
+library(&#39;dplyr&#39;)</code></pre>
+<pre><code>
+Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
 
-theta_mat &lt;- fitGOM$theta;
+    filter, lag</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>theta_mat &lt;- fitGOM$theta;
 top_features &lt;- ExtractTopFeatures(theta_mat, top_features=100,
                                    method=&quot;poisson&quot;, options=&quot;min&quot;);
 
@@ -589,10 +687,58 @@ rownames(tmp) &lt;- paste(&quot;Cluster&quot;, c(1:5))
 #install.packages(&quot;kableExtra&quot;)
 
 library(&quot;kableExtra&quot;)
-rownames(tmp) &lt;- paste(&quot;Cluster&quot;, c(1:3))
+rownames(tmp) &lt;- paste(&quot;Cluster&quot;, c(1:5))
 tmp %&gt;%
   kable(&quot;html&quot;) %&gt;%
   kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<tbody>
+<tr>
+<td style="text-align:left;">
+Cluster 1
+</td>
+<td style="text-align:left;">
+bar|1445 466, bar|14683 1332, bar|13069 1751, bar|1447 13235, bar|6118 14740, bar|3089 4713, bar|4442 4414, bar|15779 4847, bar|7903 14490, bar|12464 9698
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cluster 2
+</td>
+<td style="text-align:left;">
+bar|11521 5265, bar|1159 12215, bar|8985 5099, bar|13808 2342, bar|8663 4597, bar|10331 451, bar|6184 3474, bar|12659 3463, bar|5392 4447, bar|2672 9382
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cluster 3
+</td>
+<td style="text-align:left;">
+bar|5635 10191, bar|14643 3314, bar|4261 1391, bar|12984 8359, bar|2326 644, bar|16111 6010, bar|3584 3675, bar|10896 5728, bar|13267 7226, bar|13697 14506
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cluster 4
+</td>
+<td style="text-align:left;">
+bar|857 10936, bar|4831 10243, bar|8973 12099, bar|2456 13371, bar|9656 12417, bar|1135 16337, bar|8663 4424, bar|4961 4181, bar|7862 2436, bar|85 9094
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cluster 5
+</td>
+<td style="text-align:left;">
+bar|3178 1543, bar|13600 6315, bar|6456 10843, bar|15751 14159, bar|1013 14928, bar|4353 7234, bar|12119 13058, bar|6599 4126, bar|13416 3397, bar|10017 5199
+</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s look at the PC of the matrix:</p>
+<pre class="r"><code>svd.obj=svd(x = mat)
+v=svd.obj$v;u=svd.obj$u;d=svd.obj$d
+plot(v[,2],v[,3])</code></pre>
 </div>
 <div id="session-information" class="section level2">
 <h2>Session information</h2>
@@ -613,7 +759,7 @@ attached base packages:
 
 other attached packages:
 [1] lattice_0.20-35      RColorBrewer_1.1-2   CountClust_1.8.0    
-[4] ggplot2_3.0.0        BiocInstaller_1.30.0 workflowr_1.1.1     
+[4] ggplot2_3.0.0        BiocInstaller_1.30.0
 
 loaded via a namespace (and not attached):
  [1] gtools_3.8.1      modeltools_0.2-22 tidyselect_0.2.4 
@@ -623,20 +769,20 @@ loaded via a namespace (and not attached):
 [13] R.oo_1.22.0       pillar_1.3.0      glue_1.3.0       
 [16] withr_2.1.2       R.utils_2.7.0     bindrcpp_0.2.2   
 [19] bindr_0.1.1       plyr_1.8.4        stringr_1.3.1    
-[22] munsell_0.5.0     gtable_0.2.0      R.methodsS3_1.7.1
-[25] codetools_0.2-15  evaluate_0.11     knitr_1.20       
-[28] permute_0.9-4     flexmix_2.3-14    parallel_3.5.1   
-[31] Rcpp_0.12.18      scales_1.0.0      backports_1.1.2  
-[34] limma_3.36.5      vegan_2.5-2       maptpx_1.9-2     
-[37] picante_1.7       digest_0.6.17     stringi_1.2.4    
-[40] dplyr_0.7.6       grid_3.5.1        rprojroot_1.3-2  
-[43] cowplot_0.9.3     tools_3.5.1       magrittr_1.5     
-[46] lazyeval_0.2.1    tibble_1.4.2      cluster_2.0.7-1  
-[49] crayon_1.3.4      ape_5.1           whisker_0.3-2    
-[52] pkgconfig_2.0.2   Matrix_1.2-14     MASS_7.3-50      
-[55] SQUAREM_2017.10-1 assertthat_0.2.0  rmarkdown_1.10   
-[58] R6_2.2.2          nnet_7.3-12       nlme_3.1-137     
-[61] git2r_0.23.0      compiler_3.5.1   </code></pre>
+[22] munsell_0.5.0     gtable_0.2.0      workflowr_1.1.1  
+[25] R.methodsS3_1.7.1 codetools_0.2-15  evaluate_0.11    
+[28] knitr_1.20        permute_0.9-4     flexmix_2.3-14   
+[31] parallel_3.5.1    Rcpp_0.12.18      scales_1.0.0     
+[34] backports_1.1.2   limma_3.36.5      vegan_2.5-2      
+[37] maptpx_1.9-2      picante_1.7       digest_0.6.17    
+[40] stringi_1.2.4     dplyr_0.7.6       grid_3.5.1       
+[43] rprojroot_1.3-2   cowplot_0.9.3     tools_3.5.1      
+[46] magrittr_1.5      lazyeval_0.2.1    tibble_1.4.2     
+[49] cluster_2.0.7-1   crayon_1.3.4      ape_5.1          
+[52] whisker_0.3-2     pkgconfig_2.0.2   Matrix_1.2-14    
+[55] MASS_7.3-50       SQUAREM_2017.10-1 assertthat_0.2.0 
+[58] rmarkdown_1.10    R6_2.2.2          nnet_7.3-12      
+[61] nlme_3.1-137      git2r_0.23.0      compiler_3.5.1   </code></pre>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
