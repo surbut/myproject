@@ -1,0 +1,159 @@
+---
+title: "first-analysis"
+author: "surbut"
+date: "2018-09-28"
+output: workflowr::wflow_html
+---
+
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(cache = TRUE)
+
+```
+
+## R Markdown
+
+Here I load the data from my Data directory within this project:
+
+```{r Dataentry}
+#install.packages("workflowr")
+#library("workflowr")
+temp = list.files(path="~/Dropbox/Pearson_Data/Data/",pattern="Decon*",full.names = TRUE)
+```
+Combine into merged data set, you can see the data is actually in a different order than 1:10;
+```{r}
+temp
+```
+Here we combine the dfs into a list and merge shared rows. 
+```{r,warning=F}
+myfiles = lapply(temp, function(x){
+  a=read.csv(file=x,header = T);
+  return(a[,c(2:3)])})
+
+
+
+b=Reduce(function(x,y) merge(x, y, by = "full_label", all.x = TRUE, all.y = TRUE),myfiles) 
+
+
+
+b[is.na(b)] <- 0
+rownames(b)=b[,1];b=b[,-1]
+
+mat=as.matrix(b)
+```
+
+You can see that the barcodes are in the rows and the tissue samples are in the columns, in the order posted above, 
+```{r }
+head(mat)
+```
+
+and that the rows correspond to unique barcodes:
+```{r}
+length(rownames(b))
+
+length(unique(rownames(b)))
+
+```
+
+There are `r dim(b)[2]` unqiue barcodes. NOw we install some packages necessary for the GOM model according to **CountClust** vignette.
+
+```{r eval=T}
+
+
+# install.packages("maptpx")
+source("https://bioconductor.org/biocLite.R")
+biocLite("CountClust")
+library('CountClust')
+#label_names=read.csv("../Data/sample_names.csv",header = F)
+#source("https://bioconductor.org/biocLite.R")
+#abiocLite("Biobase")
+# Here's a tutorial from the help file of Count Clust on GTEX data
+# gtex.counts <- Biobase::exprs(GTExV6Brain)
+# gtex.meta_data <- Biobase::pData(GTExV6Brain)
+# gtex.gene_names <- rownames(gtex.counts)
+# 
+# FitGoM(t(gtex.counts),
+#             K=4, tol=1)
+
+#fit <- FitGoM(t(b),K=4, tol=1)
+
+library("RColorBrewer")
+```
+
+To fit for multiple K:
+
+```{r,eval=T}
+fits <- lapply(8:10, function(k) FitGoM(t(b),K=k, tol=1))## try over different Ks
+#fit=FitGoM(t(b),K=4, tol=1)
+
+omega <- fits[[3]]$fit$omega
+fitGOM=fits[[3]]$fit
+attributes(fitGOM)
+
+annotation <- data.frame(
+ sample_id = rownames(omega),
+ tissue_label = factor(rownames(omega),
+                       levels = rownames(omega),
+labels=rev( c("cell_pellet", "lung_5","liver_5","rt.ovary_5","sc_tumor_2","omentum_5","sc_tumor", "lung_m3","liver_m3","right_ovary_3", "left_ovary_3", "adrenal_3", "lung_4","rt_ovary_4"))))
+
+rownames(omega) <- annotation$sample_id;
+
+
+sample_id <- rownames(omega)
+
+annotation$sample_id <- as.character(annotation$sample_id)
+
+StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = c(brewer.pal(8, "Accent"),brewer.pal(8, "Accent")),
+                yaxis_label = "Development Phase",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold"))
+```
+
+Let's plot a heatmap of the clones driving the clusters:
+
+```{r}
+
+library('lattice')
+barplot(height = fitGOM$theta,col = brewer.pal(9,"Greens"),main="CloneRepresentation per Cluster")
+
+
+```
+
+We extract the top clones driving each cluster using the ExtractTopFeatures functionality of the CountClust package. We first perform the cluster annotations from the GoM model fit with $k=10` on the clone data: 
+
+
+```{r, eval=F}
+#install.packages("dplyr")
+library('dplyr')
+
+theta_mat <- fitGOM$theta;
+top_features <- ExtractTopFeatures(theta_mat, top_features=100,
+                                   method="poisson", options="min");
+
+clone_names=rownames(b)
+cell_list <- do.call(rbind, lapply(1:dim(top_features$indices)[1],
+                        function(x) clone_names[top_features$indices[x,]]))
+
+tmp <- do.call(rbind, lapply(1:5, function(i) toString(cell_list[,i])))
+rownames(tmp) <- paste("Cluster", c(1:5))
+#library(knitr)
+#install.packages("kableExtra")
+
+library("kableExtra")
+rownames(tmp) <- paste("Cluster", c(1:3))
+tmp %>%
+  kable("html") %>%
+  kable_styling()
+
+
+
+
+```
