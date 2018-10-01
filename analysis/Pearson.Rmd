@@ -63,21 +63,10 @@ There are `r dim(b)[2]` unqiue barcodes. NOw we install some packages necessary 
 
 
 # install.packages("maptpx")
-source("https://bioconductor.org/biocLite.R")
-biocLite("CountClust")
-library('CountClust')
-#label_names=read.csv("../Data/sample_names.csv",header = F)
 #source("https://bioconductor.org/biocLite.R")
-#abiocLite("Biobase")
-# Here's a tutorial from the help file of Count Clust on GTEX data
-# gtex.counts <- Biobase::exprs(GTExV6Brain)
-# gtex.meta_data <- Biobase::pData(GTExV6Brain)
-# gtex.gene_names <- rownames(gtex.counts)
-# 
-# FitGoM(t(gtex.counts),
-#             K=4, tol=1)
+#biocLite("CountClust")
+library('CountClust')
 
-#fit <- FitGoM(t(b),K=4, tol=1)
 
 library("RColorBrewer")
 ```
@@ -155,8 +144,14 @@ tmp %>%
 ```
 Let's look at the PC of the matrix:
 
-```{r,eval=F}
+```{r,eval=T}
 svd.obj=svd(x = mat)
+
+labs= c("cell_pellet", "lung_5","liver_5","rt.ovary_5","sc_tumor_2","omentum_5","sc_tumor", "lung_m3","liver_m3","right_ovary_3", "left_ovary_3", "adrenal_3", "lung_4","rt_ovary_4")
+
 v=svd.obj$v;u=svd.obj$u;d=svd.obj$d
-plot(v[,2],v[,3])
+plot(v[,2],v[,3])#,ylim=c(-0.5,1),xlim=c(-1,0.5))
+text(v[,2],v[,3],labs, cex=0.6, pos=4, col="red")
+
+
 ```
