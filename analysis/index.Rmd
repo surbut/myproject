@@ -8,4 +8,6 @@ output:
 
 Welcome to my research website.
 
-*  Pearson.Rmd [Results from First Pass](Pearson.html)
+In the document below, I have the plots that result from a GoM analysis as well as the PC results, cluster contents and top hits per cluster.
+
+  *  In this Document, we have the exploratory data analysis[Results from First Pass](Pearson.html)
