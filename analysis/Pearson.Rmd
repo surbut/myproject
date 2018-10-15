@@ -71,12 +71,19 @@ library('CountClust')
 library("RColorBrewer")
 ```
 
-To fit for multiple K:
+To fit for multiple K, we perform the floowing and plot the BF to determine the number of K that maximizes the BF:
 
 ```{r,eval=T}
-fits <- lapply(8:10, function(k) FitGoM(t(b),K=k, tol=1))## try over different Ks
+fits <- lapply(8:12, function(k) FitGoM(t(b),K=k, tol=1))## try over different Ks
 #fit=FitGoM(t(b),K=4, tol=1)
+plot((8:12),sapply(fits,function(x){
+  logBF=log(x$fit$BF)
+return(logBF)}),main="logBFvsK",xlab="K",ylab="logBF")
 
+```
+
+We can see that the algorithm appears to stablize at K=10.
+```{r}
 omega <- fits[[3]]$fit$omega
 fitGOM=fits[[3]]$fit
 attributes(fitGOM)
@@ -135,12 +142,12 @@ tmp <- do.call(rbind, lapply(1:5, function(i) toString(cell_list[,i])))
 rownames(tmp) <- paste("Cluster", c(1:5))
 #library(knitr)
 #install.packages("kableExtra")
-
-library("kableExtra")
-rownames(tmp) <- paste("Cluster", c(1:5))
-tmp %>%
-  kable("html") %>%
-  kable_styling()
+# 
+# library("kableExtra")
+# rownames(tmp) <- paste("Cluster", c(1:5))
+# tmp %>%
+#   kable("html") %>%
+#   kable_styling()
 ```
 Let's look at the PC of the matrix:
 
@@ -150,8 +157,11 @@ svd.obj=svd(x = mat)
 labs= c("cell_pellet", "lung_5","liver_5","rt.ovary_5","sc_tumor_2","omentum_5","sc_tumor", "lung_m3","liver_m3","right_ovary_3", "left_ovary_3", "adrenal_3", "lung_4","rt_ovary_4")
 
 v=svd.obj$v;u=svd.obj$u;d=svd.obj$d
+
+plot(d^2/sum(d^2),main="Proportion of Variation Explained",xlab="Number of Eigenvalues")
+
 plot(v[,2],v[,3])#,ylim=c(-0.5,1),xlim=c(-1,0.5))
 text(v[,2],v[,3],labs, cex=0.6, pos=4, col="red")
-
-
 ```
+
+

@@ -27,7 +27,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
 <script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
 <script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
@@ -324,7 +323,7 @@ div.section {
 </div>
 
 
-<p><strong>Last updated:</strong> 2018-10-01</p>
+<p><strong>Last updated:</strong> 2018-10-12</p>
 <strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
 <ul>
 <li>
@@ -347,14 +346,13 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/surbut/myproject/tree/99b625d94f1d7e512972a18f3e664246fb72b154" target="_blank">99b625d</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/surbut/myproject/tree/49b8cb33cbdb55fe0f63941826786dda34eb6c37" target="_blank">49b8cb3</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
-    Ignored:    .DS_Store
-    Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    analysis/Pearson_cache/
+    Ignored:    analysis/figure/
 
 Unstaged changes:
     Modified:   analysis/Pearson.Rmd
@@ -386,6 +384,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/surbut/myproject/blob/7b4872918a1f723bd67912266d289148504ff35f/analysis/Pearson.Rmd" target="_blank">7b48729</a>
+</td>
+<td style="text-align:left;">
+surbut
+</td>
+<td style="text-align:left;">
+2018-10-01
+</td>
+<td style="text-align:left;">
+Updated with PC plots
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/surbut/myproject/7b4872918a1f723bd67912266d289148504ff35f/docs/Pearson.html" target="_blank">7b48729</a>
+</td>
+<td style="text-align:left;">
+surbut
+</td>
+<td style="text-align:left;">
+2018-10-01
+</td>
+<td style="text-align:left;">
+Updated with PC plots
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 Rmd
@@ -542,12 +574,11 @@ bar|100 14202                0                0</code></pre>
 <pre class="r"><code># install.packages(&quot;maptpx&quot;)
 #source(&quot;https://bioconductor.org/biocLite.R&quot;)
 #biocLite(&quot;CountClust&quot;)
-library(&#39;CountClust&#39;)
-
-
-library(&quot;RColorBrewer&quot;)</code></pre>
-<p>To fit for multiple K:</p>
-<pre class="r"><code>fits &lt;- lapply(8:10, function(k) FitGoM(t(b),K=k, tol=1))## try over different Ks</code></pre>
+library(&#39;CountClust&#39;)</code></pre>
+<pre><code>Loading required package: ggplot2</code></pre>
+<pre class="r"><code>library(&quot;RColorBrewer&quot;)</code></pre>
+<p>To fit for multiple K, we perform the floowing and plot the BF to determine the number of K that maximizes the BF:</p>
+<pre class="r"><code>fits &lt;- lapply(8:12, function(k) FitGoM(t(b),K=k, tol=1))## try over different Ks</code></pre>
 <pre><code>options not specified: switching to default BIC, other choice is BF for Bayes factor</code></pre>
 <pre><code>Fitting a Grade of Membership model
             (Taddy M., AISTATS 2012, JMLR 22,
@@ -575,39 +606,28 @@ Estimating on a 14 document collection.
 Fit and Bayes Factor Estimation for K = 10
 log posterior increase: 259760567.3, done.
 log BF( 10 ) = 1020313934.65</code></pre>
+<pre><code>options not specified: switching to default BIC, other choice is BF for Bayes factor
+Fitting a Grade of Membership model
+            (Taddy M., AISTATS 2012, JMLR 22,
+            http://proceedings.mlr.press/v22/taddy12/taddy12.pdf)</code></pre>
+<pre><code>
+Estimating on a 14 document collection.
+Fit and Bayes Factor Estimation for K = 11
+log posterior increase: 39091142.7, done.
+log BF( 11 ) = 876402536.15</code></pre>
+<pre><code>options not specified: switching to default BIC, other choice is BF for Bayes factor
+Fitting a Grade of Membership model
+            (Taddy M., AISTATS 2012, JMLR 22,
+            http://proceedings.mlr.press/v22/taddy12/taddy12.pdf)</code></pre>
+<pre><code>
+Estimating on a 14 document collection.
+Fit and Bayes Factor Estimation for K = 12
+log posterior increase: 341733577, 14837238, done.
+log BF( 12 ) = 1051777406.73</code></pre>
 <pre class="r"><code>#fit=FitGoM(t(b),K=4, tol=1)
-
-omega &lt;- fits[[3]]$fit$omega
-fitGOM=fits[[3]]$fit
-attributes(fitGOM)</code></pre>
-<pre><code>$names
-[1] &quot;K&quot;     &quot;theta&quot; &quot;omega&quot; &quot;BF&quot;    &quot;D&quot;     &quot;X&quot;    
-
-$class
-[1] &quot;topics&quot;</code></pre>
-<pre class="r"><code>annotation &lt;- data.frame(
- sample_id = rownames(omega),
- tissue_label = factor(rownames(omega),
-                       levels = rownames(omega),
-labels=rev( c(&quot;cell_pellet&quot;, &quot;lung_5&quot;,&quot;liver_5&quot;,&quot;rt.ovary_5&quot;,&quot;sc_tumor_2&quot;,&quot;omentum_5&quot;,&quot;sc_tumor&quot;, &quot;lung_m3&quot;,&quot;liver_m3&quot;,&quot;right_ovary_3&quot;, &quot;left_ovary_3&quot;, &quot;adrenal_3&quot;, &quot;lung_4&quot;,&quot;rt_ovary_4&quot;))))
-
-rownames(omega) &lt;- annotation$sample_id;
-
-
-sample_id &lt;- rownames(omega)
-
-annotation$sample_id &lt;- as.character(annotation$sample_id)
-
-StructureGGplot(omega = omega,
-                annotation = annotation,
-                palette = c(brewer.pal(8, &quot;Accent&quot;),brewer.pal(8, &quot;Accent&quot;)),
-                yaxis_label = &quot;Development Phase&quot;,
-                order_sample = TRUE,
-                axis_tick = list(axis_ticks_length = .1,
-                                 axis_ticks_lwd_y = .1,
-                                 axis_ticks_lwd_x = .1,
-                                 axis_label_size = 7,
-                                 axis_label_face = &quot;bold&quot;))</code></pre>
+plot((8:12),sapply(fits,function(x){
+  logBF=log(x$fit$BF)
+return(logBF)}),main=&quot;logBFvsK&quot;,xlab=&quot;K&quot;,ylab=&quot;logBF&quot;)</code></pre>
 <p><img src="figure/Pearson.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <details> <summary><em>Expand here to see past versions of unnamed-chunk-6-1.png:</em></summary>
 <table style="border-collapse:separate; border-spacing:5px;">
@@ -639,9 +659,38 @@ surbut
 </tbody>
 </table>
 <p></details></p>
-<p>Let’s plot a heatmap of the clones driving the clusters:</p>
-<pre class="r"><code>library(&#39;lattice&#39;)
-barplot(height = fitGOM$theta,col = brewer.pal(9,&quot;Greens&quot;),main=&quot;CloneRepresentation per Cluster&quot;)</code></pre>
+<p>We can see that the algorithm appears to stablize at K=10.</p>
+<pre class="r"><code>omega &lt;- fits[[3]]$fit$omega
+fitGOM=fits[[3]]$fit
+attributes(fitGOM)</code></pre>
+<pre><code>$names
+[1] &quot;K&quot;     &quot;theta&quot; &quot;omega&quot; &quot;BF&quot;    &quot;D&quot;     &quot;X&quot;    
+
+$class
+[1] &quot;topics&quot;</code></pre>
+<pre class="r"><code>annotation &lt;- data.frame(
+ sample_id = rownames(omega),
+ tissue_label = factor(rownames(omega),
+                       levels = rownames(omega),
+labels=rev( c(&quot;cell_pellet&quot;, &quot;lung_5&quot;,&quot;liver_5&quot;,&quot;rt.ovary_5&quot;,&quot;sc_tumor_2&quot;,&quot;omentum_5&quot;,&quot;sc_tumor&quot;, &quot;lung_m3&quot;,&quot;liver_m3&quot;,&quot;right_ovary_3&quot;, &quot;left_ovary_3&quot;, &quot;adrenal_3&quot;, &quot;lung_4&quot;,&quot;rt_ovary_4&quot;))))
+
+rownames(omega) &lt;- annotation$sample_id;
+
+
+sample_id &lt;- rownames(omega)
+
+annotation$sample_id &lt;- as.character(annotation$sample_id)
+
+StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = c(brewer.pal(8, &quot;Accent&quot;),brewer.pal(8, &quot;Accent&quot;)),
+                yaxis_label = &quot;Development Phase&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;))</code></pre>
 <p><img src="figure/Pearson.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 <details> <summary><em>Expand here to see past versions of unnamed-chunk-7-1.png:</em></summary>
 <table style="border-collapse:separate; border-spacing:5px;">
@@ -673,6 +722,10 @@ surbut
 </tbody>
 </table>
 <p></details></p>
+<p>Let’s plot a heatmap of the clones driving the clusters:</p>
+<pre class="r"><code>library(&#39;lattice&#39;)
+barplot(height = fitGOM$theta,col = brewer.pal(9,&quot;Greens&quot;),main=&quot;CloneRepresentation per Cluster&quot;)</code></pre>
+<p><img src="figure/Pearson.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We extract the top clones driving each cluster using the ExtractTopFeatures functionality of the CountClust package. We first perform the cluster annotations from the GoM model fit with $k=10` on the clone data:</p>
 <pre class="r"><code>#install.packages(&quot;dplyr&quot;)
 library(&#39;dplyr&#39;)</code></pre>
@@ -696,102 +749,31 @@ tmp &lt;- do.call(rbind, lapply(1:5, function(i) toString(cell_list[,i])))
 rownames(tmp) &lt;- paste(&quot;Cluster&quot;, c(1:5))
 #library(knitr)
 #install.packages(&quot;kableExtra&quot;)
-
-library(&quot;kableExtra&quot;)
-rownames(tmp) &lt;- paste(&quot;Cluster&quot;, c(1:5))
-tmp %&gt;%
-  kable(&quot;html&quot;) %&gt;%
-  kable_styling()</code></pre>
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<tbody>
-<tr>
-<td style="text-align:left;">
-Cluster 1
-</td>
-<td style="text-align:left;">
-bar|1445 466, bar|14683 1332, bar|13069 1751, bar|1447 13235, bar|6118 14740, bar|3089 4713, bar|4442 4414, bar|15779 4847, bar|7903 14490, bar|12464 9698
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Cluster 2
-</td>
-<td style="text-align:left;">
-bar|11521 5265, bar|1159 12215, bar|8985 5099, bar|13808 2342, bar|8663 4597, bar|10331 451, bar|6184 3474, bar|12659 3463, bar|5392 4447, bar|2672 9382
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Cluster 3
-</td>
-<td style="text-align:left;">
-bar|5635 10191, bar|14643 3314, bar|4261 1391, bar|12984 8359, bar|2326 644, bar|16111 6010, bar|3584 3675, bar|10896 5728, bar|13267 7226, bar|13697 14506
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Cluster 4
-</td>
-<td style="text-align:left;">
-bar|857 10936, bar|4831 10243, bar|8973 12099, bar|2456 13371, bar|9656 12417, bar|1135 16337, bar|8663 4424, bar|4961 4181, bar|7862 2436, bar|85 9094
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Cluster 5
-</td>
-<td style="text-align:left;">
-bar|3178 1543, bar|13600 6315, bar|6456 10843, bar|15751 14159, bar|1013 14928, bar|4353 7234, bar|12119 13058, bar|6599 4126, bar|13416 3397, bar|10017 5199
-</td>
-</tr>
-</tbody>
-</table>
+# 
+# library(&quot;kableExtra&quot;)
+# rownames(tmp) &lt;- paste(&quot;Cluster&quot;, c(1:5))
+# tmp %&gt;%
+#   kable(&quot;html&quot;) %&gt;%
+#   kable_styling()</code></pre>
 <p>Let’s look at the PC of the matrix:</p>
 <pre class="r"><code>svd.obj=svd(x = mat)
 
 labs= c(&quot;cell_pellet&quot;, &quot;lung_5&quot;,&quot;liver_5&quot;,&quot;rt.ovary_5&quot;,&quot;sc_tumor_2&quot;,&quot;omentum_5&quot;,&quot;sc_tumor&quot;, &quot;lung_m3&quot;,&quot;liver_m3&quot;,&quot;right_ovary_3&quot;, &quot;left_ovary_3&quot;, &quot;adrenal_3&quot;, &quot;lung_4&quot;,&quot;rt_ovary_4&quot;)
 
 v=svd.obj$v;u=svd.obj$u;d=svd.obj$d
-plot(v[,2],v[,3])#,ylim=c(-0.5,1),xlim=c(-1,0.5))
+
+plot(d^2/sum(d^2),main=&quot;Proportion of Variation Explained&quot;,xlab=&quot;Number of Eigenvalues&quot;)</code></pre>
+<p><img src="figure/Pearson.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(v[,2],v[,3])#,ylim=c(-0.5,1),xlim=c(-1,0.5))
 text(v[,2],v[,3],labs, cex=0.6, pos=4, col=&quot;red&quot;)</code></pre>
-<p><img src="figure/Pearson.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
-<details> <summary><em>Expand here to see past versions of unnamed-chunk-9-1.png:</em></summary>
-<table style="border-collapse:separate; border-spacing:5px;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Version
-</th>
-<th style="text-align:left;">
-Author
-</th>
-<th style="text-align:left;">
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-<a href="https://github.com/surbut/myproject/blob/67f7cdcb8e4db8af0563485b50160e1e5f059637/docs/figure/Pearson.Rmd/unnamed-chunk-9-1.png" target="_blank">67f7cdc</a>
-</td>
-<td style="text-align:left;">
-surbut
-</td>
-<td style="text-align:left;">
-2018-09-28
-</td>
-</tr>
-</tbody>
-</table>
-<p></details></p>
+<p><img src="figure/Pearson.Rmd/unnamed-chunk-10-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="session-information" class="section level2">
 <h2>Session information</h2>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 3.5.1 (2018-07-02)
 Platform: x86_64-apple-darwin15.6.0 (64-bit)
-Running under: macOS High Sierra 10.13.3
+Running under: macOS High Sierra 10.13.6
 
 Matrix products: default
 BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
@@ -804,11 +786,11 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] lattice_0.20-35      RColorBrewer_1.1-2   CountClust_1.8.0    
-[4] ggplot2_3.0.0        BiocInstaller_1.30.0
+[1] dplyr_0.7.6        lattice_0.20-35    RColorBrewer_1.1-2
+[4] CountClust_1.8.0   ggplot2_3.0.0     
 
 loaded via a namespace (and not attached):
- [1] gtools_3.8.1      modeltools_0.2-22 tidyselect_0.2.4 
+ [1] gtools_3.8.1      modeltools_0.2-22 tidyselect_0.2.5 
  [4] slam_0.1-43       purrr_0.2.5       reshape2_1.4.3   
  [7] colorspace_1.3-2  htmltools_0.3.6   stats4_3.5.1     
 [10] mgcv_1.8-24       yaml_2.2.0        rlang_0.2.2      
@@ -821,13 +803,13 @@ loaded via a namespace (and not attached):
 [31] parallel_3.5.1    Rcpp_0.12.18      scales_1.0.0     
 [34] backports_1.1.2   limma_3.36.5      vegan_2.5-2      
 [37] maptpx_1.9-2      picante_1.7       digest_0.6.17    
-[40] stringi_1.2.4     dplyr_0.7.6       grid_3.5.1       
-[43] rprojroot_1.3-2   cowplot_0.9.3     tools_3.5.1      
-[46] magrittr_1.5      lazyeval_0.2.1    tibble_1.4.2     
-[49] cluster_2.0.7-1   crayon_1.3.4      ape_5.1          
-[52] whisker_0.3-2     pkgconfig_2.0.2   Matrix_1.2-14    
-[55] MASS_7.3-50       SQUAREM_2017.10-1 assertthat_0.2.0 
-[58] rmarkdown_1.10    R6_2.2.2          nnet_7.3-12      
+[40] stringi_1.2.4     grid_3.5.1        rprojroot_1.3-2  
+[43] cowplot_0.9.3     tools_3.5.1       magrittr_1.5     
+[46] lazyeval_0.2.1    tibble_1.4.2      cluster_2.0.7-1  
+[49] crayon_1.3.4      ape_5.1           whisker_0.3-2    
+[52] pkgconfig_2.0.2   Matrix_1.2-14     MASS_7.3-50      
+[55] SQUAREM_2017.10-1 assertthat_0.2.0  rmarkdown_1.10   
+[58] rstudioapi_0.8    R6_2.3.0          nnet_7.3-12      
 [61] nlme_3.1-137      git2r_0.23.0      compiler_3.5.1   </code></pre>
 </div>
 
