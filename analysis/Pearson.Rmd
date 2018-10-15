@@ -103,7 +103,7 @@ annotation$sample_id <- as.character(annotation$sample_id)
 
 StructureGGplot(omega = omega,
                 annotation = annotation,
-                palette = c(brewer.pal(8, "Accent"),brewer.pal(8, "Accent")),
+                palette = c(brewer.pal(8, "Accent"),brewer.pal(8, "Dark2")),
                 yaxis_label = "Development Phase",
                 order_sample = TRUE,
                 axis_tick = list(axis_ticks_length = .1,
