@@ -126,6 +126,7 @@ col=colorRampPalette(c('dark red','white','dark blue'))
 lat=theta_mat
 print(levelplot(lat[n:1,],col.regions=col,#col.regions = clrs,
                 xlab = "",ylab = "",colorkey = TRUE))
+#axis(1,at = 1:5,labels = rownames(theta_mat))
 # 
 # heatmap.2()
 # 
