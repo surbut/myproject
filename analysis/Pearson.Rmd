@@ -20,14 +20,22 @@ Here I load the data from my Data directory within this project:
 ```{r Dataentry}
 #install.packages("workflowr")
 #library("workflowr")
-temp = list.files(path="~/Dropbox/Pearson_Data/Data/",pattern="Decon*",full.names = TRUE)
+#temp = list.files(path="~/Dropbox/Pearson_Data/Data/",pattern="Decon*",full.names = TRUE)
+
+mat=read.csv("~/myproject/data/M3_Mouse.csv",header = T)[,-1];
+rownames(mat)=mat[,1];mat=mat[,-1]
 ```
-Combine into merged data set, you can see the data is actually in a different order than 1:10;
-```{r}
-temp
+
+We can see that the barcodes are in the rows and the tissues are in the columns, and that the dimensions are as follow:
+
+```{r,echo=FALSE}
+#<!Combine into merged data set, you can see the data is actually in a different order than 1:10;>
+#temp
+head(mat)
 ```
-Here we combine the dfs into a list and merge shared rows. 
-```{r,warning=F}
+ 
+```{r, eval=F,echo=F}
+#Here we combine the dfs into a list and merge shared rows.
 myfiles = lapply(temp, function(x){
   a=read.csv(file=x,header = T);
   return(a[,c(2:3)])})
@@ -42,24 +50,21 @@ b[is.na(b)] <- 0
 rownames(b)=b[,1];b=b[,-1]
 
 mat=as.matrix(b)
-```
-
-You can see that the barcodes are in the rows and the tissue samples are in the columns, in the order posted above, 
-```{r }
+#You can see that the barcodes are in the rows and the tissue samples are in the columns, in the order posted above, 
 head(mat)
-```
 
-and that the rows correspond to unique barcodes:
-```{r}
+
+#and that the rows correspond to unique barcodes:
+
 length(rownames(b))
 
 length(unique(rownames(b)))
 
 ```
 
-There are `r dim(b)[2]` unqiue barcodes. NOw we install some packages necessary for the GOM model according to **CountClust** vignette.
+There are `r dim(mat)[2]` unqiue barcodes. Noww we install some packages necessary for the GOM model according to **CountClust** vignette.
 
-```{r eval=T}
+```{r eval=T,echo=FALSE}
 
 
 # install.packages("maptpx")
@@ -71,87 +76,90 @@ library('CountClust')
 library("RColorBrewer")
 ```
 
-To fit for multiple K:
+To fit for multiple K, we apply the following model and consider how the different clones fall into patterns characterized by tissue-sepcific expression. We cna see that each cluone can have membership in up to 10 clusters, where each cluster is characterized by predilection to a particular tissue or group of tissues. WE can then consider which clusters are most popular, and examine the tissue patterns they demonstrate.
 
 ```{r,eval=T}
-fits <- lapply(8:10, function(k) FitGoM(t(b),K=k, tol=1))## try over different Ks
-#fit=FitGoM(t(b),K=4, tol=1)
+#fits <- lapply(2:10, function(k) FitGoM(mat,K=k, tol=1))## try over different Ks
+fit=FitGoM(mat,K=10, tol=1)$fit
 
-omega <- fits[[3]]$fit$omega
-fitGOM=fits[[3]]$fit
-attributes(fitGOM)
-
-annotation <- data.frame(
- sample_id = rownames(omega),
- tissue_label = factor(rownames(omega),
-                       levels = rownames(omega),
-labels=rev( c("cell_pellet", "lung_5","liver_5","rt.ovary_5","sc_tumor_2","omentum_5","sc_tumor", "lung_m3","liver_m3","right_ovary_3", "left_ovary_3", "adrenal_3", "lung_4","rt_ovary_4"))))
-
-rownames(omega) <- annotation$sample_id;
+omega <- fit$omega
 
 
-sample_id <- rownames(omega)
+# annotation <- data.frame(
+#  sample_id = rownames(omega),
+#  tissue_label = factor(rownames(omega),
+#                        levels = rownames(omega)))
+# 
+# rownames(omega) <- annotation$sample_id;
+# 
+# 
+# sample_id <- rownames(omega)
 
-annotation$sample_id <- as.character(annotation$sample_id)
+#annotation$sample_id <- as.character(annotation$sample_id)
 
 StructureGGplot(omega = omega,
-                annotation = annotation,
-                palette = c(brewer.pal(8, "Accent"),brewer.pal(8, "Accent")),
-                yaxis_label = "Development Phase",
+                #annotation = annotation,
+                palette = c(brewer.pal(8, "Accent"),brewer.pal(8, "Dark2")),
+                #yaxis_label = "Development Phase",
                 order_sample = TRUE,
+                #sample_order_opts=4,
                 axis_tick = list(axis_ticks_length = .1,
                                  axis_ticks_lwd_y = .1,
                                  axis_ticks_lwd_x = .1,
                                  axis_label_size = 7,
-                                 axis_label_face = "bold"))
+                                 axis_label_face = "bold"),yaxis_label = "Clone_Number",figure_title = "Clonal Membership in Clusters")
 ```
 
-Let's plot a heatmap of the clones driving the clusters:
 
-```{r}
-
-library('lattice')
-barplot(height = fitGOM$theta,col = brewer.pal(9,"Greens"),main="CloneRepresentation per Cluster")
+We extract the top clones driving each cluster using the ExtractTopFeatures functionality of the CountClust package. We first perform the cluster annotations from the GoM model fit with $k=10` on the clone data. We can see that some of the clusters have strong  lung expression, and some have more tissue specific expression in adrenal, left ovary, liver or right ovary. 
 
 
-```
-
-We extract the top clones driving each cluster using the ExtractTopFeatures functionality of the CountClust package. We first perform the cluster annotations from the GoM model fit with $k=10` on the clone data: 
-
-
-```{r, eval=T}
-#install.packages("dplyr")
+```{r, eval=T,echo=FALSE}
+#install.packages("gplots")
+library(gplots)
 library('dplyr')
-
-theta_mat <- fitGOM$theta;
-top_features <- ExtractTopFeatures(theta_mat, top_features=100,
-                                   method="poisson", options="min");
-
-clone_names=rownames(b)
-cell_list <- do.call(rbind, lapply(1:dim(top_features$indices)[1],
-                        function(x) clone_names[top_features$indices[x,]]))
-
-tmp <- do.call(rbind, lapply(1:5, function(i) toString(cell_list[,i])))
-rownames(tmp) <- paste("Cluster", c(1:5))
-#library(knitr)
-#install.packages("kableExtra")
-
-library("kableExtra")
-rownames(tmp) <- paste("Cluster", c(1:5))
-tmp %>%
-  kable("html") %>%
-  kable_styling()
+library(lattice)
+theta_mat <- fit$theta;
+rownames(theta_mat)=colnames(mat)
+n=nrow(theta_mat)
+col=colorRampPalette(c('dark red','white','dark blue'))
+lat=theta_mat
+print(levelplot(lat[n:1,],col.regions=col,#col.regions = clrs,
+                xlab = "",ylab = "",colorkey = TRUE))
+# 
+# heatmap.2()
+# 
+# col=colorRampPalette(c('dark red','white','dark blue'))
+# 
+# (theta_mat,colorRampPalette(c('dark red','white','dark blue')))
+# 
+# top_features <- ExtractTopFeatures(theta_mat, top_features=100,
+#                                    method="poisson", options="min");
+# 
+# clone_names=rownames(b)
+# cell_list <- do.call(rbind, lapply(1:dim(top_features$indices)[1],
+#                         function(x) clone_names[top_features$indices[x,]]))
+# 
+# tmp <- do.call(rbind, lapply(1:5, function(i) toString(cell_list[,i])))
+# rownames(tmp) <- paste("Cluster", c(1:5))
+# #library(knitr)
+# #install.packages("kableExtra")
+# 
+# library("kableExtra")
+# rownames(tmp) <- paste("Cluster", c(1:5))
+# tmp %>%
+#   kable("html") %>%
+#   kable_styling()
 ```
-Let's look at the PC of the matrix:
 
 ```{r,eval=T}
-svd.obj=svd(x = mat)
-
-labs= c("cell_pellet", "lung_5","liver_5","rt.ovary_5","sc_tumor_2","omentum_5","sc_tumor", "lung_m3","liver_m3","right_ovary_3", "left_ovary_3", "adrenal_3", "lung_4","rt_ovary_4")
-
-v=svd.obj$v;u=svd.obj$u;d=svd.obj$d
-plot(v[,2],v[,3])#,ylim=c(-0.5,1),xlim=c(-1,0.5))
-text(v[,2],v[,3],labs, cex=0.6, pos=4, col="red")
-
-
+# svd.obj=svd(x = mat)
+# 
+# labs= c("cell_pellet", "lung_5","liver_5","rt.ovary_5","sc_tumor_2","omentum_5","sc_tumor", "lung_m3","liver_m3","right_ovary_3", "left_ovary_3", "adrenal_3", "lung_4","rt_ovary_4")
+# 
+# v=svd.obj$v;u=svd.obj$u;d=svd.obj$d
+# plot(v[,2],v[,3])#,ylim=c(-0.5,1),xlim=c(-1,0.5))
+# text(v[,2],v[,3],labs, cex=0.6, pos=4, col="red")
+# 
+# 
 ```
