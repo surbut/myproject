@@ -323,7 +323,7 @@ div.section {
 </div>
 
 
-<p><strong>Last updated:</strong> 2018-10-16</p>
+<p><strong>Last updated:</strong> 2018-10-17</p>
 <strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
 <ul>
 <li>
@@ -346,7 +346,7 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/surbut/myproject/tree/eac0bc1c6be0d0e390c60bb769749d6786277c40" target="_blank">eac0bc1</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/surbut/myproject/tree/2f79c7e4f7894d71573ae7652ace9b19eab54e61" target="_blank">2f79c7e</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -357,7 +357,7 @@ Ignored files:
     Ignored:    analysis/Pearson_cache/
 
 Unstaged changes:
-    Conflicted: analysis/Pearson.Rmd
+    Modified:   analysis/Pearson.Rmd
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
@@ -386,6 +386,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/surbut/myproject/2f79c7e4f7894d71573ae7652ace9b19eab54e61/docs/Pearson.html" target="_blank">2f79c7e</a>
+</td>
+<td style="text-align:left;">
+surbut
+</td>
+<td style="text-align:left;">
+2018-10-16
+</td>
+<td style="text-align:left;">
+Updated
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 Rmd
@@ -452,6 +469,74 @@ surbut
 </td>
 <td style="text-align:left;">
 Updated with different dimenson
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/surbut/myproject/blob/456103fd79dc18cb34c485222d5ea034446af1ae/analysis/Pearson.Rmd" target="_blank">456103f</a>
+</td>
+<td style="text-align:left;">
+Sarah Urbut
+</td>
+<td style="text-align:left;">
+2018-10-15
+</td>
+<td style="text-align:left;">
+Changed color scheem .. but there are bigger problems
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/surbut/myproject/456103fd79dc18cb34c485222d5ea034446af1ae/docs/Pearson.html" target="_blank">456103f</a>
+</td>
+<td style="text-align:left;">
+Sarah Urbut
+</td>
+<td style="text-align:left;">
+2018-10-15
+</td>
+<td style="text-align:left;">
+Changed color scheem .. but there are bigger problems
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/surbut/myproject/blob/9db8746d804aa64375577fe7c1f3ecceee3d2451/analysis/Pearson.Rmd" target="_blank">9db8746</a>
+</td>
+<td style="text-align:left;">
+Sarah Urbut
+</td>
+<td style="text-align:left;">
+2018-10-15
+</td>
+<td style="text-align:left;">
+Updated PCA plots
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/surbut/myproject/9db8746d804aa64375577fe7c1f3ecceee3d2451/docs/Pearson.html" target="_blank">9db8746</a>
+</td>
+<td style="text-align:left;">
+Sarah Urbut
+</td>
+<td style="text-align:left;">
+2018-10-15
+</td>
+<td style="text-align:left;">
+Updated PCA plots
 </td>
 </tr>
 <tr>
@@ -582,16 +667,16 @@ bar|20 4536     1     0           0          0       0</code></pre>
 <pre><code>Loading required package: ggplot2</code></pre>
 <p>To fit for multiple K, we apply the following model and consider how the different clones fall into patterns characterized by tissue-sepcific expression. We cna see that each cluone can have membership in up to 10 clusters, where each cluster is characterized by predilection to a particular tissue or group of tissues. WE can then consider which clusters are most popular, and examine the tissue patterns they demonstrate.</p>
 <pre class="r"><code>#fits &lt;- lapply(2:10, function(k) FitGoM(mat,K=k, tol=1))## try over different Ks
-fit=FitGoM(mat,K=10, tol=1)$fit</code></pre>
+fit=FitGoM(mat,K=5, tol=1)$fit</code></pre>
 <pre><code>options not specified: switching to default BIC, other choice is BF for Bayes factor</code></pre>
 <pre><code>Fitting a Grade of Membership model
             (Taddy M., AISTATS 2012, JMLR 22,
             http://proceedings.mlr.press/v22/taddy12/taddy12.pdf)</code></pre>
 <pre><code>
 Estimating on a 23651 document collection.
-Fit and Bayes Factor Estimation for K = 10
-log posterior increase: 1333455.3, done.
-log BF( 10 ) = 260071806.28</code></pre>
+Fit and Bayes Factor Estimation for K = 5
+log posterior increase: done.
+log BF( 5 ) = 259125870.41</code></pre>
 <pre class="r"><code>omega &lt;- fit$omega
 
 
@@ -619,6 +704,36 @@ StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;),yaxis_label = &quot;Clone_Number&quot;,figure_title = &quot;Clonal Membership in Clusters&quot;)</code></pre>
 <p><img src="figure/Pearson.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-4-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/surbut/myproject/blob/ffb1929d73d70d28c8ad9c79d12dc46924a660a0/docs/figure/Pearson.Rmd/unnamed-chunk-4-1.png" target="_blank">ffb1929</a>
+</td>
+<td style="text-align:left;">
+surbut
+</td>
+<td style="text-align:left;">
+2018-10-16
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <p>We extract the top clones driving each cluster using the ExtractTopFeatures functionality of the CountClust package. We first perform the cluster annotations from the GoM model fit with $k=10` on the clone data. We can see that some of the clusters have strong lung expression, and some have more tissue specific expression in adrenal, left ovary, liver or right ovary.</p>
 <p><img src="figure/Pearson.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <details> <summary><em>Expand here to see past versions of unnamed-chunk-5-1.png:</em></summary>

@@ -80,7 +80,7 @@ To fit for multiple K, we apply the following model and consider how the differe
 
 ```{r,eval=T}
 #fits <- lapply(2:10, function(k) FitGoM(mat,K=k, tol=1))## try over different Ks
-fit=FitGoM(mat,K=10, tol=1)$fit
+fit=FitGoM(mat,K=5, tol=1)$fit
 
 omega <- fit$omega
 
