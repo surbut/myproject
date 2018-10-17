@@ -111,7 +111,7 @@ StructureGGplot(omega = omega,
 ```
 
 
-We extract the top clones driving each cluster using the ExtractTopFeatures functionality of the CountClust package. We first perform the cluster annotations from the GoM model fit with $k=10` on the clone data. We can see that some of the clusters have strong  lung expression, and some have more tissue specific expression in adrenal, left ovary, liver or right ovary. 
+We extract the top clones driving each cluster using the ExtractTopFeatures functionality of the CountClust package. We first perform the cluster annotations from the GoM model fit with `k=5` on the clone data. We can see that some of the clusters have strong  lung expression, and some have more tissue specific expression in adrenal, left ovary, liver or right ovary. 
 
 
 ```{r, eval=T,echo=FALSE}
@@ -125,7 +125,7 @@ n=nrow(theta_mat)
 col=colorRampPalette(c('dark red','white','dark blue'))
 lat=theta_mat
 print(levelplot(lat[n:1,],col.regions=col,#col.regions = clrs,
-                xlab = "",ylab = "",colorkey = TRUE))
+                xlab = "",ylab = "K",colorkey = TRUE))
 #axis(1,at = 1:5,labels = rownames(theta_mat))
 # 
 # heatmap.2()
