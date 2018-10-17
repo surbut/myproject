@@ -15,7 +15,7 @@ knitr::opts_chunk$set(cache = TRUE)
 
 ## R Markdown
 
-Here I load the data from my Data directory within this project:
+Here I load the data from my Data directory within this project. Note the full path. I don't know why it doesn't work from realtive. 
 
 ```{r Dataentry}
 #install.packages("workflowr")
@@ -26,7 +26,7 @@ mat=read.csv("~/myproject/data/M3_Mouse.csv",header = T)[,-1];
 rownames(mat)=mat[,1];mat=mat[,-1]
 ```
 
-We can see that the barcodes are in the rows and the tissues are in the columns, and that the dimensions are as follow:
+We can see that the barcodes are in the rows and the tissues are in the columns, and that the dimensions are as follow. WE are limited to K=5.
 
 ```{r,echo=FALSE}
 #<!Combine into merged data set, you can see the data is actually in a different order than 1:10;>
@@ -100,14 +100,14 @@ omega <- fit$omega
 StructureGGplot(omega = omega,
                 #annotation = annotation,
                 palette = c(brewer.pal(8, "Accent"),brewer.pal(8, "Dark2")),
-                #yaxis_label = "Development Phase",
+                yaxis_label = "Clone Number",
                 order_sample = TRUE,
                 #sample_order_opts=4,
                 axis_tick = list(axis_ticks_length = .1,
                                  axis_ticks_lwd_y = .1,
                                  axis_ticks_lwd_x = .1,
                                  axis_label_size = 7,
-                                 axis_label_face = "bold"),yaxis_label = "Clone_Number",figure_title = "Clonal Membership in Clusters")
+                                 axis_label_face = "bold"),figure_title = "Clonal Membership in Clusters")
 ```
 
 
