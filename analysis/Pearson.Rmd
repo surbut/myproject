@@ -15,9 +15,7 @@ knitr::opts_chunk$set(cache = TRUE)
 
 ## R Markdown
 
-Here I load the data from my Data directory within this project. Note the full path. I don't know why it doesn't work from relative. 
-
-In this experiment, the tail vein of a mouse is transfected with an ovarian tumor cell-pellet "seed", and all the cells are labeled 'clones.'
+In this experiment, the tail vein of a mouse is transfected with an ovarian tumor cell-pellet "seed", and all the cells are labeled 'clones.' We seek to identify patterns of migration through a Grade of Memebrship model, in which clones are assigned proportional memberhsip in one of k clusters, and each cluster is characterized by a particular pattern of enrichment across tissues. Because these enrichments represent the replications potential of each clone, we might then infer an ordinal relationship such that the highest level of enrichment must also represent the first 'stop' in the cluster, allowing increased cell divisions.
 
 
 ```{r Dataentry}
