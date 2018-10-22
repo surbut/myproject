@@ -15,7 +15,10 @@ knitr::opts_chunk$set(cache = TRUE)
 
 ## R Markdown
 
-Here I load the data from my Data directory within this project. Note the full path. I don't know why it doesn't work from realtive. 
+Here I load the data from my Data directory within this project. Note the full path. I don't know why it doesn't work from relative. 
+
+In this experiment, the tail vein of a mouse is transfected with an ovarian tumor cell-pellet "seed", and all the cells are labeled 'clones.'
+
 
 ```{r Dataentry}
 #install.packages("workflowr")
@@ -99,7 +102,7 @@ omega <- fit$omega
 
 StructureGGplot(omega = omega,
                 #annotation = annotation,
-                palette = c(brewer.pal(8, "Accent"),brewer.pal(8, "Dark2")),
+                palette = c(brewer.pal(8, "Accent")),
                 yaxis_label = "Clone Number",
                 order_sample = TRUE,
                 #sample_order_opts=4,
@@ -109,6 +112,19 @@ StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = "bold"),figure_title = "Clonal Membership in Clusters")
 ```
+
+We can examine the `omega` matrix to try and understand the proportional membership of every clone, and overall enrichemnt of each cluster.
+
+```{r, eval=T,echo=T}
+head(omega[1:10,])
+```
+
+For example, clone with barcode `1_9115` has 44% membership in cluster 1, 52.8% membership in cluster 3, and trivial membership in other clusters. To look at overall proportions of membership in each cluster, we can consider the overall proportion of clones (weighted by their cluster memebrship) in eahc cluster. WE see that Cluster 1 is the most popular followed by cluster 2, etc.
+
+```{r}
+pie(colSums(omega/nrow(mat)),main="Cluster Membership",col=brewer.pal(8, "Accent"))
+```
+
 
 
 We extract the top clones driving each cluster using the ExtractTopFeatures functionality of the CountClust package. We first perform the cluster annotations from the GoM model fit with `k=5` on the clone data. We can see that some of the clusters have strong  lung expression, and some have more tissue specific expression in adrenal, left ovary, liver or right ovary. 
@@ -153,7 +169,7 @@ print(levelplot(lat[n:1,],col.regions=col,#col.regions = clrs,
 #   kable_styling()
 ```
 
-```{r,eval=T}
+```{r,eval=F,echo=F}
 # svd.obj=svd(x = mat)
 # 
 # labs= c("cell_pellet", "lung_5","liver_5","rt.ovary_5","sc_tumor_2","omentum_5","sc_tumor", "lung_m3","liver_m3","right_ovary_3", "left_ovary_3", "adrenal_3", "lung_4","rt_ovary_4")
