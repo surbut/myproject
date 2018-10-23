@@ -76,11 +76,11 @@ library('CountClust')
 library("RColorBrewer")
 ```
 
-To fit for multiple K, we apply the following model and consider how the different clones fall into patterns characterized by tissue-sepcific expression. We cna see that each cluone can have membership in up to 10 clusters, where each cluster is characterized by predilection to a particular tissue or group of tissues. WE can then consider which clusters are most popular, and examine the tissue patterns they demonstrate.
+To fit for multiple K, we apply the following model and consider how the different clones fall into patterns characterized by tissue-sepcific expression. We cna see that each cluone can have membership in up to 32 $\(2^5)$ clusters, where each cluster is characterized by predilection to a particular tissue or group of tissues. WE can then consider which clusters are most popular, and examine the tissue patterns they demonstrate.
 
 ```{r,eval=T}
 #fits <- lapply(2:10, function(k) FitGoM(mat,K=k, tol=1))## try over different Ks
-fit=FitGoM(mat,K=5, tol=1)$fit
+fit=FitGoM(mat,K=32, tol=1)$fit
 
 omega <- fit$omega
 
@@ -99,7 +99,7 @@ omega <- fit$omega
 
 StructureGGplot(omega = omega,
                 #annotation = annotation,
-                palette = c(brewer.pal(8, "Accent")),
+                palette = c(brewer.pal(8, "Accent"),brewer.pal(8,"Dark2"),brewer.pal(8,"Paired"),brewer.pal(8,"Set1")),
                 yaxis_label = "Clone Number",
                 order_sample = TRUE,
                 #sample_order_opts=4,
