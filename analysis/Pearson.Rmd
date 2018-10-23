@@ -176,9 +176,11 @@ summary(x[x>1])})
 
  Let's look at the distribution within nonZero tissues, excluding those barcodes with less than 10 per tissue.
 ```{r}
-apply(mat,2,function(x){
-h=hist(x[x>10],freq = F,nclass = 100)
-plot(h)})
+colnames(mat)
+sapply(colnames(mat),function(x){
+  vector=mat[,x]
+  h=hist(vector[vector>10],plot = F,freq=F)
+  plot(h,main=paste("Hist of barcodes in",x,">10"))})
 ```
 
 It appears that within each tissue, the 'on' barcodes have a distribution of counts with various parameters - similar to a mixture of Poisson distributions with varying $\lambda$. Perhaps we could create a flexible mixture model that uses the unimodal assumption on Poisson data, as opposed to normal data.
