@@ -166,15 +166,23 @@ print(levelplot(lat[n:1,],col.regions=col,#col.regions = clrs,
 #   kable("html") %>%
 #   kable_styling()
 ```
-
+ ###
+ 
+ Let's look at the distribution within nonZero tissues
 ```{r,eval=F,echo=F}
-# svd.obj=svd(x = mat)
-# 
-# labs= c("cell_pellet", "lung_5","liver_5","rt.ovary_5","sc_tumor_2","omentum_5","sc_tumor", "lung_m3","liver_m3","right_ovary_3", "left_ovary_3", "adrenal_3", "lung_4","rt_ovary_4")
-# 
-# v=svd.obj$v;u=svd.obj$u;d=svd.obj$d
-# plot(v[,2],v[,3])#,ylim=c(-0.5,1),xlim=c(-1,0.5))
-# text(v[,2],v[,3],labs, cex=0.6, pos=4, col="red")
-# 
-# 
+apply(mat,2,function(x){
+summary(x[x>1])})
+```
+
+ Let's look at the distribution within nonZero tissues, excluding those barcodes with less than 10 per tissue.
+```{r}
+apply(mat,2,function(x){
+h=hist(x[x>10],freq = F,nclass = 100)
+plot(h)})
+```
+
+It appears that within each tissue, the 'on' barcodes have a distribution of counts with various parameters - similar to a mixture of Poisson distributions with varying $\lambda$. Perhaps we could create a flexible mixture model that uses the unimodal assumption on Poisson data, as opposed to normal data.
+
+See The generic version of cormotif(link)[https://github.com/stephenslab/miximash/blob/master/inst/notes/generic_cormotif.pdf].
+
 ```
