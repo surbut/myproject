@@ -9,7 +9,6 @@ output: workflowr::wflow_html
 ```{r setup, include=FALSE}
 
 knitr::opts_chunk$set(echo = TRUE)
-#knitr::opts_chunk$set(cache = TRUE)
 
 ```
 
@@ -187,4 +186,4 @@ It appears that within each tissue, the 'on' barcodes have a distribution of cou
 
 See The generic version of cormotif(link)[https://github.com/stephenslab/miximash/blob/master/inst/notes/generic_cormotif.pdf].
 
-```
+
